@@ -4,6 +4,12 @@ import sys
 # Globalna nepromenljiva varijabla:
 skocko_znaci = ('%', '#', '$', '&')
 
+# Lista za belezenje pokusaja korisnika
+pokusaji = []
+
+# Flag odredjuje odgovor za gresku prilikom unosa
+flag = 0
+
 # Funkcije:
 
 def kreiraj_kombinaciju():
@@ -46,10 +52,29 @@ def uvod():
             """)
     
 def provera_unosa(inp):
+    global flag
     for i in inp:
         if i not in skocko_znaci:
+            flag = 1
             return False
     if len(inp) != 4:
+        flag = 2
+        return False
+    return True
+
+def provera_ponavljanja(inp):
+    global flag
+    global pokusaji
+    if inp not in pokusaji:
+        pokusaji.append(inp)
+        return True
+    flag = 3
+    return False
+            
+            
+def totalna_provera(inp):
+    while not (provera_unosa(inp) and provera_ponavljanja(inp)):
+        print("Greska prilikom unosa.")
         return False
     return True
 
@@ -64,7 +89,6 @@ poeni = 250
 # Kreiranje tajne kombinacije
 secret = kreiraj_kombinaciju()
 
-
 # Pocetak programa za korisnika
 uvod()
 while i < 8:
@@ -76,8 +100,13 @@ while i < 8:
         print('*' * 30)
         sys.exit()
     user_input = input("Unesite kombinaciju: ")
-    while not provera_unosa(user_input):
-        print("Greska prilikom unosa.\nKombinacija mora imati tacno 4 karaktera koji mogu biti: %, $, & ili #.")
+    while not totalna_provera(user_input):
+        if flag == 1:
+            print("Korisceni karakteri mogu biti: %, $, & ili #.")
+        elif flag == 2:
+            print("Kombinacija mora imati tacno 4 karaktera.")
+        elif flag == 3:
+            print("Kombinacija vec isprobana ranije.")
         user_input = input("\nPokusajte ponovo: ")
     pogodjeni = 0
     postoje = 0
