@@ -78,6 +78,15 @@ def totalna_provera(inp):
         return False
     return True
 
+def pobeda():
+    print('*' * 30)
+    print(f"CESTITAM! POGODILI STE IZ {i}. POKUSAJA!")
+    print(kombinacija())
+    print(f'OSVOJILI STE {poeni} POENA.')
+    print('*' * 30)
+    sys.exit()
+    
+
 # Inicijalizacija globalnih promenljivih varijabli
 
 i = 0
@@ -93,12 +102,7 @@ secret = kreiraj_kombinaciju()
 uvod()
 while i < 8:
     if user_input == secret:
-        print('*' * 30)
-        print(f"CESTITAM! POGODILI STE IZ {i}. POKUSAJA!")
-        print(kombinacija())
-        print(f'OSVOJILI STE {poeni} POENA.')
-        print('*' * 30)
-        sys.exit()
+        pobeda()
     user_input = input("Unesite kombinaciju: ")
     while not totalna_provera(user_input):
         if flag == 1:
@@ -131,12 +135,7 @@ while i < 8:
     print()
     i += 1
 if user_input == secret:
-        print('*' * 30)
-        print(f"CESTITAM! POGODILI STE IZ {i}. POKUSAJA!")
-        print(kombinacija())
-        print(f'OSVOJILI STE {poeni} POENA.')
-        print('*' * 30)
-        sys.exit()
+        pobeda()
 print("Nazalost, nemate vise pokusaja.")
 print(kombinacija())
 
